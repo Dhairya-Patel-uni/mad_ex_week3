@@ -27,7 +27,8 @@
  * @return {number[]} A new array containing only non-negative numbers.
  */
 function filterNegativeNumbers(numbers) {
-  // Your implementation here
+  const positive = numbers.filter((val) => val >= 0);
+  return positive;
 }
 
 /**
@@ -46,7 +47,9 @@ function filterNegativeNumbers(numbers) {
  * @return {number[]} A new array containing the numbers divisible by three doubled.
  */
 function doubleDivisibleByThree(numbers) {
-  // Your implementation here
+  const DivArr = numbers.filter((val) => val % 3 === 0);
+  const sqArr = DivArr.map((no) => no * 2);
+  return sqArr;
 }
 
 /**
@@ -75,7 +78,10 @@ function doubleDivisibleByThree(numbers) {
  * @return {Object[]} An array of objects containing the name and email of qualifying students, sorted by name.
  */
 function selectHighPerformingStudents(students) {
-  // Your implementation here
+  const highgpa = students.filter((val1) => val1["GPA"] >= 5 && val1.hobbies.includes('coding'));
+  const name = highgpa.map((val) => ({ name: val.name, email: val.email }));
+  name.sort((a, b) => a.name.localeCompare(b.name))
+  return name;
 }
 
 /**
@@ -103,7 +109,17 @@ function selectHighPerformingStudents(students) {
  * @return {Object} An object containing aggregated student data.
  */
 function aggregateStudentData(students) {
-  // Your implementation here
+  const totalst = students.length;
+  const avggpa = (students.reduce((acc, g) => acc + g.GPA, 0)) / totalst;
+  const lvcoding = students.filter((c) => c.hobbies.includes('coding'));
+  const coStNum = lvcoding.length;
+  const coStGpa = (lvcoding.reduce((acc,b) => acc + b.GPA, 0)) / coStNum;
+  return {
+    'studentNum' : totalst,
+    'studentAvgGPA' : Number(avggpa.toFixed(2)),
+    'codingStudentNum' : coStNum,
+    'codingStudentGPA' : Number(coStGpa.toFixed(2))
+  };
 }
 
 /**
@@ -126,7 +142,28 @@ function aggregateStudentData(students) {
  * @return {string} The converted string, either in camelCase or sentence form.
  */
 function swapForm(input) {
-  // Your implementation here
+  let words = input.split(" ");
+  if (words.length !== 1) {
+    let start = words[0];
+    for (let i = 1; i < words.length; i++) {
+      let letter = words[i];
+      letter = letter[0].toUpperCase() + letter.slice(1);
+      start += letter;
+    }
+    return start;
+  }
+  else {
+    let end = "";
+    for (let j = 0; j < input.length; j++) {
+      if (input[j] === input[j].toUpperCase()) {
+        end += " " + input[j].toLowerCase();
+      }
+      else {
+        end += input[j];
+      }
+    }
+    return end;
+  }
 }
 
 // Export the function for testing with Jest
